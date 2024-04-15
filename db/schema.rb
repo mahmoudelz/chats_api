@@ -10,23 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_04_160622) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_15_114146) do
   create_table "apps", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_apps_on_name", unique: true
   end
 
   create_table "chats", force: :cascade do |t|
     t.string "chatroom"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "app_id"
+    t.integer "chat_number"
+    t.index ["app_id"], name: "index_chats_on_app_id"
+    t.index ["chat_number", "app_id"], name: "index_chats_on_chat_number_and_app_id", unique: true
+    t.index ["chatroom"], name: "index_chats_on_chatroom", unique: true
   end
 
   create_table "messages", force: :cascade do |t|
     t.string "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "chat_id"
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
   end
 
+  add_foreign_key "chats", "apps"
+  add_foreign_key "messages", "chats"
 end
