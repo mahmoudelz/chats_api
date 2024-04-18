@@ -50,3 +50,4 @@ end
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'ransack'
 gem 'factory_bot_rails'
+gem 'sidekiq'
